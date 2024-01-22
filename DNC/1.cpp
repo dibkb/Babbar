@@ -83,30 +83,52 @@
         // void printAllSubarrays(vector<int> nums){
         //     backtrack(nums, 0,{});
         // }
-    void backtrack(int index, string s, string curr,string part){
-        if(index == s.size()){
+    // void backtrack(int index, string s, string curr,string part){
+    //     if(index == s.size()){
+    //         return;
+    //     }
+    //     // cout << curr <<endl;
+    //     for (int i = index; i < s.size(); i++)
+    //     {
+    //         string str = s.substr(index, i - index + 1);
+    //         if(str == part){
+    //             backtrack(i + 1, s, curr, part);
+    //         }
+    //         else if (str.find(part) != std::string::npos) {
+    //             continue;
+    //         }else{
+    //             backtrack(i + 1, s, curr + str, part);
+    //         }
+    //     }
+    // }
+    string res;
+    void backtrack(string&s, string& part)
+    {
+        if(s.find(part) == std::string::npos){
+            // not in part;
             return;
         }
-        // cout << curr <<endl;
-        for (int i = index; i < s.size(); i++)
-        {
-            string str = s.substr(index, i - index + 1);
-            if(str == part){
-                backtrack(i + 1, s, curr, part);
+        for (int i = 0; i < s.size(); ++i){
+            string sub = s.substr(i, part.size());
+            // cout << sub<<" " << i << endl;
+            if (sub == part)
+            {
+                s.erase(i, part.size());
+                backtrack(s, part);
             }
-            else if (str.find(part) != std::string::npos) {
+            else
                 continue;
-            }else{
-                backtrack(i + 1, s, curr + str, part);
-            }
         }
     }
 
-    void removeOccurrences(string s, string part)
+    void removeOccurrences(string& s, string & part)
     {
-        backtrack(0, s, "",part);
+        backtrack(s,part);
     }
     int main(){
-        removeOccurrences("abc", "b"); 
+        string s = "daabcbaabcbc";
+        string part = "abc";
+        removeOccurrences(s,part);
+        cout << s;
         return 0;
     }
