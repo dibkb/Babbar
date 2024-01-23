@@ -101,34 +101,49 @@
     //         }
     //     }
     // }
-    string res;
-    void backtrack(string&s, string& part)
-    {
-        if(s.find(part) == std::string::npos){
-            // not in part;
-            return;
-        }
-        for (int i = 0; i < s.size(); ++i){
-            string sub = s.substr(i, part.size());
-            // cout << sub<<" " << i << endl;
-            if (sub == part)
-            {
-                s.erase(i, part.size());
-                backtrack(s, part);
-            }
-            else
-                continue;
-        }
-    }
+    // string res;
+    // void backtrack(string&s, string& part)
+    // {
+    //     if(s.find(part) == std::string::npos){
+    //         // not in part;
+    //         return;
+    //     }
+    //     for (int i = 0; i < s.size(); ++i){
+    //         string sub = s.substr(i, part.size());
+    //         // cout << sub<<" " << i << endl;
+    //         if (sub == part)
+    //         {
+    //             s.erase(i, part.size());
+    //             backtrack(s, part);
+    //         }
+    //         else
+    //             continue;
+    //     }
+    // }
 
-    void removeOccurrences(string& s, string & part)
+    // void removeOccurrences(string& s, string & part)
+    // {
+    //     backtrack(s,part);
+    // }
+    // -----------possible dearrangement-----------
+    void dearrangement(vector<int> nums, int idx, vector<int> temp){
+        //  --------------base case------------
+        if(idx >= nums.size()){
+            for(auto it: temp)
+                cout << it << " ";
+            cout << endl;
+        }
+        for (int i = idx; i < nums.size(); ++i)
+        {
+            swap(nums[idx], nums[i]);
+            temp.emplace_back(nums[i]);
+            dearrangement(nums, idx + 1, temp);
+            swap(nums[idx], nums[i]);
+            temp.pop_back();
+        }
+    };
+    int main()
     {
-        backtrack(s,part);
-    }
-    int main(){
-        string s = "daabcbaabcbc";
-        string part = "abc";
-        removeOccurrences(s,part);
-        cout << s;
+        dearrangement({1,2,3}, 0, {});
         return 0;
     }
