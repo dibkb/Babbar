@@ -37,25 +37,39 @@ void printStack(const std::stack<T>& myStack) {
 
     std::cout << std::endl;
 }
-void insertBottom(stack<int> &st, int n){
+// void insertBottom(stack<int> &st, int n){
+//     if(st.empty()){
+//         st.push(n);
+//         return;
+//     }
+//     int temp = st.top();
+//     st.pop();
+//     insertBottom(st, n);
+//     st.push(temp);
+// }
+// void reverseStack(stack<int> &st, int k){
+//     if( k == 0)
+//         return;
+//     int temp = st.top();
+//     st.pop();
+//     reverseStack(st,k-1);
+//     insertBottom(st, temp);
+// };
+void insertSorted(stack<int> &st, int num){
     if(st.empty()){
-        st.push(n);
+        st.push(num);
         return;
     }
     int temp = st.top();
-    st.pop();
-    insertBottom(st, n);
-    st.push(temp);
-}
-void reverseStack(stack<int> &st, int k){
-    if( k == 0)
+    if(temp < num){
+        // base case;
+        st.push(num);
         return;
-    int temp = st.top();
+    }
     st.pop();
-    reverseStack(st,k-1);
-    insertBottom(st, temp);
+    insertSorted(st, num);
+    st.push(temp);
 };
-using namespace std;
 int main(){
     stack<int> st;
     st.push(10);
@@ -64,7 +78,7 @@ int main(){
     st.push(40);
     st.push(50);
     printStack(st);
-    reverseStack(st,5);
+    insertSorted(st, 2);
     printStack(st);
     // solve(st);
     return 0;
