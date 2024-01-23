@@ -62,7 +62,6 @@ void insertSorted(stack<int> &st, int num){
     }
     int temp = st.top();
     if(temp < num){
-        // base case;
         st.push(num);
         return;
     }
@@ -70,15 +69,23 @@ void insertSorted(stack<int> &st, int num){
     insertSorted(st, num);
     st.push(temp);
 };
+void sort(stack<int> &st){
+    if(st.size() == 1)
+        return;
+    int temp = st.top();
+    st.pop();
+    sort(st);
+    insertSorted(st, temp);
+}
 int main(){
     stack<int> st;
-    st.push(10);
-    st.push(20);
-    st.push(30);
-    st.push(40);
+    st.push(100);
+    st.push(21);
+    st.push(31);
+    st.push(90);
     st.push(50);
     printStack(st);
-    insertSorted(st, 2);
+    sort(st);
     printStack(st);
     // solve(st);
     return 0;
