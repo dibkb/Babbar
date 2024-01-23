@@ -47,9 +47,12 @@ void insertBottom(stack<int> &st, int n){
     insertBottom(st, n);
     st.push(temp);
 }
-void reverseStack(stack<int> &st){
+void reverseStack(stack<int> &st, int k){
+    if( k == 0)
+        return;
     int temp = st.top();
     st.pop();
+    reverseStack(st,k-1);
     insertBottom(st, temp);
 };
 using namespace std;
@@ -61,7 +64,7 @@ int main(){
     st.push(40);
     st.push(50);
     printStack(st);
-    reverseStack(st);
+    reverseStack(st,5);
     printStack(st);
     // solve(st);
     return 0;
