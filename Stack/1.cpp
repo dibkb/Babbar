@@ -100,6 +100,7 @@ void printNextSmall(vector<int>nums){
         }
     }
 }
+
 int main(){
     // stack<int> st;
     // st.push(100);
