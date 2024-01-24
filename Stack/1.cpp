@@ -55,38 +55,62 @@ void printStack(const std::stack<T>& myStack) {
 //     reverseStack(st,k-1);
 //     insertBottom(st, temp);
 // };
-void insertSorted(stack<int> &st, int num){
-    if(st.empty()){
-        st.push(num);
-        return;
+// void insertSorted(stack<int> &st, int num){
+//     if(st.empty()){
+//         st.push(num);
+//         return;
+//     }
+//     int temp = st.top();
+//     if(temp < num){
+//         st.push(num);
+//         return;
+//     }
+//     st.pop();
+//     insertSorted(st, num);
+//     st.push(temp);
+// };
+// void sort(stack<int> &st){
+//     if(st.size() == 1)
+//         return;
+//     int temp = st.top();
+//     st.pop();
+//     sort(st);
+//     insertSorted(st, temp);
+// }
+void printNextSmall(vector<int>nums){
+    stack<int> st;
+    int n = nums.size();
+    for (int i = n - 1; i >= 0; --i)
+    {
+        if(i == n-1){
+            cout << -1<< " ";
+            st.push(nums[i]);
+        }else{
+            while(!st.empty() && st.top() > nums[i]){
+                st.pop();
+            }
+            if(st.empty()){
+                cout << -1 << " ";
+            }
+            else
+            {
+                cout << st.top() << " ";
+            }
+            st.push(nums[i]);
+        }
     }
-    int temp = st.top();
-    if(temp < num){
-        st.push(num);
-        return;
-    }
-    st.pop();
-    insertSorted(st, num);
-    st.push(temp);
-};
-void sort(stack<int> &st){
-    if(st.size() == 1)
-        return;
-    int temp = st.top();
-    st.pop();
-    sort(st);
-    insertSorted(st, temp);
 }
 int main(){
-    stack<int> st;
-    st.push(100);
-    st.push(21);
-    st.push(31);
-    st.push(90);
-    st.push(50);
-    printStack(st);
-    sort(st);
-    printStack(st);
+    // stack<int> st;
+    // st.push(100);
+    // st.push(21);
+    // st.push(31);
+    // st.push(90);
+    // st.push(50);
+    // printStack(st);
+    // sort(st);
+    // printStack(st);
     // solve(st);
+    printNextSmall({8, 4, 6, 2, 3});
     return 0;
 }
