@@ -100,6 +100,42 @@ void printNextSmall(vector<int>nums){
         }
     }
 }
+void printPrevSmall(vector<int>nums){
+    stack<pair<int,int>> st;
+    st.push({-1,-1});
+    int ans = 0;
+    for (int i = 0; i < nums.size(); ++i)
+    {
+        int curr = nums[i];
+        int cnt = 0;
+        while (st.top().first > curr)
+        {
+            cnt++;
+            st.pop();
+        }
+        pair<int, int> prev;
+        prev = st.top();
+        if(prev.first == -1){
+            ans = max(
+                ans,
+                curr * 1);
+        }
+        else
+        {
+            int maxi = max(
+                prev.first * (i - prev.second + 1),
+                curr * 1);
+            ans = max(ans, maxi);
+        }
+        // cout << prev.first <<" ";
+        cout << prev.first <<" " <<prev.second <<endl;
+        pair<int, int> p;
+        p.first = curr;
+        p.second = i;
+        st.push(p);
+    }
+    // cout << ans;
+}
 
 int main(){
     // stack<int> st;
@@ -112,6 +148,6 @@ int main(){
     // sort(st);
     // printStack(st);
     // solve(st);
-    printNextSmall({8, 4, 6, 2, 3});
+    printPrevSmall({2,1,2});
     return 0;
 }
