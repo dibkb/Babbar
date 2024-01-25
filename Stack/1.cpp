@@ -77,103 +77,134 @@ void printStack(const std::stack<T>& myStack) {
 //     sort(st);
 //     insertSorted(st, temp);
 // }
-void printNextSmall(vector<int>nums){
+// void printNextSmall(vector<int>nums){
+//     stack<int> st;
+//     int n = nums.size();
+//     for (int i = n - 1; i >= 0; --i)
+//     {
+//         if(i == n-1){
+//             cout << -1<< " ";
+//             st.push(nums[i]);
+//         }else{
+//             while(!st.empty() && st.top() >= nums[i]){
+//                 st.pop();
+//             }
+//             if(st.empty()){
+//                 cout << -1 << " ";
+//             }
+//             else
+//             {
+//                 cout << st.top() << " ";
+//             }
+//             st.push(nums[i]);
+//         }
+//     }
+// }
+// vector<int> prevSmall(vector<int>nums){
+//     stack<int> st;
+//     st.push(-1);
+//     vector<int> res(nums.size());
+//     for (int i = 0; i < nums.size(); ++i)
+//     {
+//         int curr = nums[i];
+//         while(st.top() != -1 && nums[st.top()] >= curr){
+//             st.pop();
+//         }
+//         res[i] = st.top();
+//         st.push(i);
+//     }
+//     return res;
+// }
+// vector<int> nextSmall(vector<int>nums){
+//     stack<int> st;
+//     int n = nums.size();
+//     st.push(n);
+//     vector<int> res(n);
+//     for (int i = n-1; i>= 0; --i)
+//     {
+//         int curr = nums[i];
+//         while(st.top() != n && nums[st.top()] > curr){
+//             st.pop();
+//         }
+//         res[i] = st.top();
+//         st.push(i);
+//     }
+//     return res;
+// }
+// vector<int> nextGreatest(vector<int>nums){
+//     stack<int> st;
+//     int n = nums.size();
+//     st.push(nums[n - 1]);
+//     vector<int> result(n);
+//     for (int i = n - 1; i >= 0; --i){
+//         if(i == n-1){
+//             st.push(nums[n - 1]);
+//             result[i] = 0;
+//         }else{
+//             while(!st.empty() && nums[i] >= st.top()){
+//                 st.pop();
+//             }
+//             if(!st.empty()){
+//                 result[i] = st.top();
+//                 st.push(nums[i]);
+//             }else{
+//                 result[i] = 0;
+//                 st.push(nums[i]);
+
+//             }
+
+//         }
+//     }
+//     return result;
+// }
+// void inValidString(string s){
+//     stack<char> st;
+//     for(auto it:s){
+//         if(st.size() >=2){
+//             char last = st.top(); st.pop();
+//             char secondLast = st.top(); st.pop();
+//             if(2* last == (secondLast + it) ){
+//                 continue;
+//             }else{
+//                 st.push(secondLast); st.push(last); st.push(it);
+//             }
+//         }else {
+//             st.push(it);
+//         }
+//     }
+//     for(auto it:st)
+//         cout << it < " ";
+// }
+void astroidCollision(vector<int>s){
     stack<int> st;
-    int n = nums.size();
-    for (int i = n - 1; i >= 0; --i)
-    {
-        if(i == n-1){
-            cout << -1<< " ";
-            st.push(nums[i]);
-        }else{
-            while(!st.empty() && st.top() >= nums[i]){
-                st.pop();
-            }
-            if(st.empty()){
-                cout << -1 << " ";
+    for(auto it : s){
+        if(!st.empty()){
+            if(st.top() > 0 && it<0)
+            {
+                while(!st.empty() && st.top() > 0 && st.top() < abs(it)){
+                    st.pop();
+                }
+                if(!st.empty() && st.top()+it == 0){
+                    st.pop();
+                }else if(!st.empty() && st.top() < 0){
+                    st.push(it);
+                }else if(st.empty()) st.push(it);
             }
             else
             {
-                cout << st.top() << " ";
+                st.push(it);
             }
-            st.push(nums[i]);
-        }
+        }else st.push(it);
     }
-}
-vector<int> prevSmall(vector<int>nums){
-    stack<int> st;
-    st.push(-1);
-    vector<int> res(nums.size());
-    for (int i = 0; i < nums.size(); ++i)
-    {
-        int curr = nums[i];
-        while(st.top() != -1 && nums[st.top()] >= curr){
-            st.pop();
-        }
-        res[i] = st.top();
-        st.push(i);
+    vector<int> ans;
+    while(!st.empty()){
+        ans.emplace_back(st.top());
+        st.pop();
     }
-    return res;
-}
-vector<int> nextSmall(vector<int>nums){
-    stack<int> st;
-    int n = nums.size();
-    st.push(n);
-    vector<int> res(n);
-    for (int i = n-1; i>= 0; --i)
-    {
-        int curr = nums[i];
-        while(st.top() != n && nums[st.top()] > curr){
-            st.pop();
-        }
-        res[i] = st.top();
-        st.push(i);
+    reverse(ans.begin(), ans.end());
+    for(auto it: ans){
+        cout << it << " ";
     }
-    return res;
-}
-vector<int> nextGreatest(vector<int>nums){
-    stack<int> st;
-    int n = nums.size();
-    st.push(nums[n - 1]);
-    vector<int> result(n);
-    for (int i = n - 1; i >= 0; --i){
-        if(i == n-1){
-            st.push(nums[n - 1]);
-            result[i] = 0;
-        }else{
-            while(!st.empty() && nums[i] >= st.top()){
-                st.pop();
-            }
-            if(!st.empty()){
-                result[i] = st.top();
-                st.push(nums[i]);
-            }else{
-                result[i] = 0;
-                st.push(nums[i]);
-
-            }
-
-        }
-    }
-    return result;
-}
-void inValidString(string s){
-    stack<char> st;
-    for(auto it:s){
-        if(st.size() >=2){
-            char last = st.top(); st.pop();
-            char secondLast = st.top(); st.pop();
-            if(2* last == (secondLast + it) ){
-                continue;
-            }else{
-                st.push(secondLast); st.push(last); st.push(it);
-            }
-        }else {
-            st.push(it);
-        }
-    }
-    for(auto it:st)
-        cout << it < " ";
 }
 int main(){
     // stack<int> st;
@@ -186,5 +217,6 @@ int main(){
     // sort(st);
     // printStack(st);
     // solve(st);
-    inValidString("abccba");
+    astroidCollision({1,-2,-2,2});
+    // astroidCollision({8,-8});
 }
