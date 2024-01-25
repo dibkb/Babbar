@@ -1,4 +1,3 @@
-
-int main(){
-    // stack<int> st;
-    // st.push(100);
+    // for(auto it: ans1){
+    //     cout << it <<" ";
+    // }

@@ -86,7 +86,7 @@ void printNextSmall(vector<int>nums){
             cout << -1<< " ";
             st.push(nums[i]);
         }else{
-            while(!st.empty() && st.top() > nums[i]){
+            while(!st.empty() && st.top() >= nums[i]){
                 st.pop();
             }
             if(st.empty()){
@@ -100,43 +100,63 @@ void printNextSmall(vector<int>nums){
         }
     }
 }
-void printPrevSmall(vector<int>nums){
-    stack<pair<int,int>> st;
-    st.push({-1,-1});
-    int ans = 0;
+vector<int> prevSmall(vector<int>nums){
+    stack<int> st;
+    st.push(-1);
+    vector<int> res(nums.size());
     for (int i = 0; i < nums.size(); ++i)
     {
         int curr = nums[i];
-        int cnt = 0;
-        while (st.top().first > curr)
-        {
-            cnt++;
+        while(st.top() != -1 && nums[st.top()] >= curr){
             st.pop();
         }
-        pair<int, int> prev;
-        prev = st.top();
-        if(prev.first == -1){
-            ans = max(
-                ans,
-                curr * 1);
-        }
-        else
-        {
-            int maxi = max(
-                prev.first * (i - prev.second + 1),
-                curr * 1);
-            ans = max(ans, maxi);
-        }
-        // cout << prev.first <<" ";
-        cout << prev.first <<" " <<prev.second <<endl;
-        pair<int, int> p;
-        p.first = curr;
-        p.second = i;
-        st.push(p);
+        res[i] = st.top();
+        st.push(i);
     }
-    // cout << ans;
+    return res;
 }
+vector<int> nextSmall(vector<int>nums){
+    stack<int> st;
+    int n = nums.size();
+    st.push(n);
+    vector<int> res(n);
+    for (int i = n-1; i>= 0; --i)
+    {
+        int curr = nums[i];
+        while(st.top() != n && nums[st.top()] > curr){
+            st.pop();
+        }
+        res[i] = st.top();
+        st.push(i);
+    }
+    return res;
+}
+vector<int> nextGreatest(vector<int>nums){
+    stack<int> st;
+    int n = nums.size();
+    st.push(nums[n - 1]);
+    vector<int> result(n);
+    for (int i = n - 1; i >= 0; --i){
+        if(i == n-1){
+            st.push(nums[n - 1]);
+            result[i] = 0;
+        }else{
+            while(!st.empty() && nums[i] > st.top()){
+                st.pop();
+            }
+            if(!st.empty()){
+                result[i] = st.top();
+                st.push(nums[i]);
+            }else{
+                result[i] = 0;
+                st.push(nums[i]);
 
+            }
+
+        }
+    }
+    return result;
+}
 int main(){
     // stack<int> st;
     // st.push(100);
@@ -148,6 +168,8 @@ int main(){
     // sort(st);
     // printStack(st);
     // solve(st);
-    printPrevSmall({2,1,2});
-    return 0;
+    vector<int> next = nextGreatest({2,7,4,3,5});
+    for(auto it: next)
+        cout << it << " ";
+        return 0;
 }
