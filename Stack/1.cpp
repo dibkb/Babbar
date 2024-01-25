@@ -141,7 +141,7 @@ vector<int> nextGreatest(vector<int>nums){
             st.push(nums[n - 1]);
             result[i] = 0;
         }else{
-            while(!st.empty() && nums[i] > st.top()){
+            while(!st.empty() && nums[i] >= st.top()){
                 st.pop();
             }
             if(!st.empty()){
@@ -157,6 +157,24 @@ vector<int> nextGreatest(vector<int>nums){
     }
     return result;
 }
+void inValidString(string s){
+    stack<char> st;
+    for(auto it:s){
+        if(st.size() >=2){
+            char last = st.top(); st.pop();
+            char secondLast = st.top(); st.pop();
+            if(2* last == (secondLast + it) ){
+                continue;
+            }else{
+                st.push(secondLast); st.push(last); st.push(it);
+            }
+        }else {
+            st.push(it);
+        }
+    }
+    for(auto it:st)
+        cout << it < " ";
+}
 int main(){
     // stack<int> st;
     // st.push(100);
@@ -168,8 +186,5 @@ int main(){
     // sort(st);
     // printStack(st);
     // solve(st);
-    vector<int> next = nextGreatest({2,7,4,3,5});
-    for(auto it: next)
-        cout << it << " ";
-        return 0;
+    inValidString("abccba");
 }
