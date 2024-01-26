@@ -131,32 +131,41 @@ void printStack(const std::stack<T>& myStack) {
 //     }
 //     return res;
 // }
-// vector<int> nextGreatest(vector<int>nums){
-//     stack<int> st;
-//     int n = nums.size();
-//     st.push(nums[n - 1]);
-//     vector<int> result(n);
-//     for (int i = n - 1; i >= 0; --i){
-//         if(i == n-1){
-//             st.push(nums[n - 1]);
-//             result[i] = 0;
-//         }else{
-//             while(!st.empty() && nums[i] >= st.top()){
-//                 st.pop();
-//             }
-//             if(!st.empty()){
-//                 result[i] = st.top();
-//                 st.push(nums[i]);
-//             }else{
-//                 result[i] = 0;
-//                 st.push(nums[i]);
+vector<int> nextGreatest(vector<int>nums){
+    stack<int> st;
+    int n = nums.size();
+    st.push(nums[n - 1]);
+    vector<int> result(n);
+    // for (int i = n - 1; i >= 0; --i){
+    //     if(i == n-1){
+    //         st.push(nums[n - 1]);
+    //         result[i] = nums[n-1];
+    //     }else{
+    //         while(!st.empty() && nums[i] >= st.top()){
+    //             st.pop();
+    //         }
+    //         if(!st.empty()){
+    //             result[i] = st.top();
+    //             st.push(nums[i]);
+    //         }else{
+    //             result[i] = nums[i];
+    //             st.push(nums[i]);
+    //         }
 
-//             }
-
-//         }
-//     }
-//     return result;
-// }
+    //     }
+    // }
+        for (int i = 0; i < n; ++i) {
+        // Pop elements from the stack until an element greater than the current element is found
+        while (!st.empty() && nums[i] > nums[st.top()]) {
+            result[st.top()] = nums[i];
+            st.pop();
+        }
+        // Push the current index onto the stack
+        st.push(i);
+    }
+    cout << st.size() <<endl;
+    return result;
+}
 // void inValidString(string s){
 //     stack<char> st;
 //     for(auto it:s){
@@ -217,6 +226,8 @@ int main(){
     // sort(st);
     // printStack(st);
     // solve(st);
-    astroidCollision({1,-2,-2,2});
+    vector<int> ans = nextGreatest({12,6,7,1,1});
+    for(auto i : ans)
+        cout << i << " ";
     // astroidCollision({8,-8});
 }
