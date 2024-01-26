@@ -40,11 +40,32 @@ using namespace std;
 //     }
 //     return res;
 // }
+int longestValidParentheses(string s){
+    int ans = 0;
+    stack<char> st;
+    st.push(-1);
+    for (int i = 0; i < s.length(); ++i)
+    {
+        if(s[i] == ')'){
+            st.pop();
+            if(!st.empty() && st.top()){
+                ans = max(ans, i - st.top());
+            }else{
+                st.push(i);
+            }
+        }
+        else{
+            st.push(i);
+        }
+    }
+    return ans;
+}
 int main()
 {
     // vector<vector<int>> cars = { { 1, 2 }, { 2, 1 }, { 4, 3 }, { 7, 2 } };
-    vector<vector<int>> cars = { { 3, 4 }, { 5, 4 }, { 6, 3 }, { 9, 1 } };
-    vector<double> nums = nextSmaller(cars);
-    for (auto i : nums) cout << i << " ";
+    // vector<vector<int>> cars = { { 3, 4 }, { 5, 4 }, { 6, 3 }, { 9, 1 } };
+    // vector<double> nums = nextSmaller(cars);
+    cout << longestValidParentheses("()(()");
+    // for (auto i : nums) cout << i << " ";
     return 0;
 }
