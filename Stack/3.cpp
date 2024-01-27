@@ -60,12 +60,36 @@ int longestValidParentheses(string s){
     }
     return ans;
 }
+    string removeDuplicates(string s, int k) {
+        stack<pair<char,int>> st;
+        st.push({s[0], 1});
+        for (int i = 1; i < s.size(); ++i)
+        {
+            pair<char, int> top = st.top();
+            if (top.first == s[i])
+            {
+                st.pop();
+                st.push({top.first, top.second++});
+            }else{
+                st.push({s[i], 1});
+            }
+            if(top.second == k)
+                st.pop();
+        }
+        string ans;
+        while(!st.empty()){
+            ans+=st.top().first;
+            st.pop();
+        }
+        reverse(ans.begin(),ans.end());
+        return ans;
+    }
 int main()
 {
     // vector<vector<int>> cars = { { 1, 2 }, { 2, 1 }, { 4, 3 }, { 7, 2 } };
     // vector<vector<int>> cars = { { 3, 4 }, { 5, 4 }, { 6, 3 }, { 9, 1 } };
     // vector<double> nums = nextSmaller(cars);
-    cout << longestValidParentheses("()(()");
+    cout << removeDuplicates("abcccccfffdd",2);
     // for (auto i : nums) cout << i << " ";
     return 0;
 }
