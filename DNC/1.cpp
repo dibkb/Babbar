@@ -129,9 +129,7 @@
     void dearrangement(vector<int> nums, int idx, vector<int> temp){
         //  --------------base case------------
         if(idx >= nums.size()){
-            for(auto it: temp)
-                cout << it << " ";
-            cout << endl;
+            
         }
         for (int i = idx; i < nums.size(); ++i)
         {
@@ -139,7 +137,6 @@
             temp.emplace_back(nums[i]);
             dearrangement(nums, idx + 1, temp);
             swap(nums[idx], nums[i]);
-            temp.pop_back();
         }
     };
     int main()
